@@ -1,0 +1,41 @@
+/**
+ * 全局词典：所有英文→中文映射合并为一张 map，按长短语优先匹配。
+ * 分区注释仅作维护用，不参与运行时逻辑。
+ */
+export const GLOBAL_MAP: Record<string, string> = {
+  // === 通用
+  'Home': '首页',
+  'Feed': '动态',
+  'Dashboard': '控制台',
+  'Top repositories': '热门仓库',
+  'Show more': '显示更多',
+  'Good morning': '早上好',
+  'Ask': '提问',
+  'Latest from our changelog': '最新来自我们的更新日志',
+  'Issues': '议题',
+  'Pull requests': '拉取请求',
+  'Projects': '项目',
+  'Discussions': '讨论',
+  'Explore': '探索',
+  'Marketplace': '市场',
+  'MCP registry': 'MCP 注册表',
+  'Settings': '设置',
+  'Security': '安全',
+  'General': '常规',
+  'Repository name': '仓库名称',
+  'Repository': '仓库',
+  'Rename': '重命名',
+  'Features': '功能',
+  'Releases': '发行',
+  'Default branch': '默认分支',
+  'The default branch is considered the “base” branch in your repository, against which all pull requests and code commits are automatically made, unless you specify a different branch.': '默认分支即仓库的“基准”分支，除非指定其他分支，所有拉取请求和提交都会基于该分支进行。',
+  'Enable release immutability': '启用发行版不可变性',
+  'Disallow assets and tags from being modified once a release is published.': '发行版发布后，禁止修改其资源与标签。',
+  'Upload an image to customize your repository’s social media preview.': '上传图片以自定义仓库的社交媒体预览。',
+  'Rename branch': '重命名分支',
+  'Wikis host documentation for your repository.': 'Wiki 用于托管仓库的文档。',
+  'Switch to another branch': '切换到另一个分支',
+  'Restrict editing to collaborators only Loading': '仅限协作者编辑，加载中...',
+  'Issues integrate lightweight task tracking into your repository. Keep projects on track with issue labels and milestones, and reference them in commit messages.': '议题将轻量级任务跟踪集成到你的仓库中。使用议题标签和里程碑保持项目跟踪，并在提交消息中引用它们。',
+  'Branches': '分支',
+};

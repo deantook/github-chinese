@@ -1,0 +1,15 @@
+{
+  "name": "github-chinese",
+  "version": "0.1.0",
+  "description": "Chrome 扩展：将 GitHub 网页 UI 汉化为中文",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\""
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.0"
+  }
+}

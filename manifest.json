@@ -1,0 +1,21 @@
+{
+  "name": "GitHub 中文",
+  "version": "0.1.0",
+  "description": "将 GitHub 网页 UI 汉化为中文",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": ["storage"],
+  "host_permissions": ["https://github.com/*"]
+}
