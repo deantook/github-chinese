@@ -1,5 +1,6 @@
 import type { SelectorRule } from './types';
 import { getExactMap } from '../dictionaries';
+import { replaceTextInSubtree } from './text-replacer';
 
 const exactMap = getExactMap();
 
@@ -22,12 +23,20 @@ export const SELECTOR_RULES: SelectorRule[] = [
   { selector: '[data-tab-item="security"]' },
   { selector: '[data-tab-item="pulse"]' },
   { selector: '[data-tab-item="contributors"]' },
+  { selector: '[data-tab-item="insights"]' },
+  { selector: '[data-tab-item="settings"]' },
+  // 仓库顶栏导航内所有 Tab 文案（含无 data-tab-item 的项，按 span 兜底）
+  { selector: 'nav[class*="LocalNavigation"] span[data-component="text"]' },
   // 仓库设置页：重命名仓库的 label（React 常先插入节点再填文本，选择器兜底）
   { selector: 'label[for="rename-field"]' },
   // 仓库设置页 options_bucket 内标题（如 Default branch 等，选择器兜底）
   { selector: '#options_bucket h2.Subhead-heading' },
   // 仓库设置页 tool-tip（如 Rename branch 等，自定义元素后渲染兜底）
   { selector: '#options_bucket tool-tip' },
+  // 仓库顶栏操作按钮：Pin / Fork / Watch / Star（子树内按词典替换，支持 "Fork 0" → "复刻 0"）
+  { selector: '#repository-details-container button', subtreeReplace: true },
+  // 仓库右侧边栏 BorderGrid 内链接（Releases、About 等）
+  { selector: 'div.BorderGrid a' },
 ];
 
 export function applySelectorRules(root: Node): void {
@@ -38,14 +47,22 @@ export function applySelectorRules(root: Node): void {
   for (const rule of SELECTOR_RULES) {
     const nodes = root.querySelectorAll(rule.selector);
     for (const el of nodes) {
+      if (rule.subtreeReplace) {
+        replaceTextInSubtree(el, exactMap);
+        continue;
+      }
       if (rule.text !== undefined) {
-        el.textContent = rule.text;
+        const raw = el.textContent?.trim() ?? '';
+        if (raw) replaceTextInSubtree(el, { [raw]: rule.text });
         continue;
       }
       const raw = el.textContent?.trim() ?? '';
       if (!raw) continue;
       const translated = translateByMap(raw);
-      if (translated !== raw) el.textContent = translated;
+      if (translated !== raw) {
+        // 只替换文本节点，保留子元素（如 Tab 前的图标 SVG），避免 el.textContent 清空整颗子树
+        replaceTextInSubtree(el, { [raw]: translated });
+      }
     }
   }
 }
