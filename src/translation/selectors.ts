@@ -36,10 +36,14 @@ export const SELECTOR_RULES: SelectorRule[] = [
   // 仓库顶栏操作按钮：Pin / Fork / Watch / Star（子树内按词典替换，支持 "Fork 0" → "复刻 0"）
   // 优先通过 aria-label 匹配 Star / Unstar 按钮，避免依赖具体 DOM 结构
   { selector: 'button[aria-label*="Star"], button[aria-label*="Unstar"]', subtreeReplace: true },
-  // 兼容旧的 pagehead-actions 容器结构
+  // 兼容旧的 pagehead-actions 容器结构（有时文本包在 span.d-inline 里）
   { selector: 'ul[class*="pagehead-actions"] button', subtreeReplace: true },
+  { selector: '#repository-container-header ul.pagehead-actions button span.d-inline', subtreeReplace: true },
   // 仓库右侧边栏 BorderGrid 内链接（Releases、About 等）
   { selector: 'div.BorderGrid a' },
+  // 仓库文件列表顶部按钮：Code / Add file（新 React 布局）
+  { selector: 'span.react-directory-add-file-button' },
+  { selector: 'button span.prc-Button-Label-FWkx3[data-component="text"]' },
 ];
 
 export function applySelectorRules(root: Node): void {
