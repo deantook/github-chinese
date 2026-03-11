@@ -34,7 +34,10 @@ export const SELECTOR_RULES: SelectorRule[] = [
   // 仓库设置页 tool-tip（如 Rename branch 等，自定义元素后渲染兜底）
   { selector: '#options_bucket tool-tip' },
   // 仓库顶栏操作按钮：Pin / Fork / Watch / Star（子树内按词典替换，支持 "Fork 0" → "复刻 0"）
-  { selector: '#repository-details-container button', subtreeReplace: true },
+  // 优先通过 aria-label 匹配 Star / Unstar 按钮，避免依赖具体 DOM 结构
+  { selector: 'button[aria-label*="Star"], button[aria-label*="Unstar"]', subtreeReplace: true },
+  // 兼容旧的 pagehead-actions 容器结构
+  { selector: 'ul[class*="pagehead-actions"] button', subtreeReplace: true },
   // 仓库右侧边栏 BorderGrid 内链接（Releases、About 等）
   { selector: 'div.BorderGrid a' },
 ];
